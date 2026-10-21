@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Конспект: Present Simple & Continuous</title>
+<style>
+  :root {
+    --bg: #0f172a;
+    --card: #1e293b;
+    --text: #f8fafc;
+    --muted: #94a3b8;
+    --accent: #f59e0b;
+    --accent2: #ef4444;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  /* Верхняя панель */
+  .topbar {
+    height: 60px;
+    background: var(--card);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    border-bottom: 1px solid #334155;
+    flex-shrink: 0;
+  }
+  .topbar h2 { font-size: 1.2em; color: var(--accent); }
+  .lang-switch { display: flex; gap: 10px; background: #0f172a; padding: 5px; border-radius: 20px; }
+  .lang-switch button {
+    background: transparent; border: none; color: var(--muted); padding: 5px 15px;
+    border-radius: 15px; cursor: pointer; font-weight: bold; transition: 0.2s;
+  }
+  .lang-switch button.active { background: var(--accent); color: #000; }
+
+  /* Область контента */
+  .main-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+  }
+  .slide {
+    background: var(--card);
+    width: 100%;
+    max-width: 800px;
+    padding: 30px;
+    border-radius: 15px;
+    border: 1px solid #334155;
+    display: none; /* Скрыто по умолчанию */
+    flex-direction: column;
+    animation: fadeIn 0.3s ease;
+  }
+  .slide.active { display: flex; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Заголовок (для пасхалки) */
+  h1 {
+    font-size: 2em;
+    color: var(--accent);
+    margin-bottom: 20px;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    border-bottom: 2px dashed #334155;
+    padding-bottom: 15px;
+  }
+  h2 { color: #60a5fa; margin-bottom: 15px; font-size: 1.5em; }
+  h3 { color: #f59e0b; margin: 15px 0 10px 0; font-size: 1.2em; }
+  
+  p { font-size: 1.1em; line-height: 1.6; color: #cbd5e1; margin-bottom: 15px; }
+  ul { margin-left: 25px; margin-bottom: 15px; color: #cbd5e1; line-height: 1.6; }
+  li { margin-bottom: 8px; }
+  b { color: #fff; }
+  
+  .example {
+    background: #0f172a;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid var(--accent);
+    margin: 15px 0;
+    font-family: monospace;
+    font-size: 1.1em;
+    color: #e2e8f0;
+  }
+  .example.cont { border-left-color: #3b82f6; }
+
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 1em; }
+  th, td { border: 1px solid #334155; padding: 12px; text-align: left; }
+  th { background: #1e293b; color: var(--accent); }
+  tr:nth-child(even) { background: #162032; }
+
+  /* Навигация (низ) */
+  .nav-bar {
+    height: 70px;
+    background: var(--card);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    border-top: 1px solid #334155;
+    flex-shrink: 0;
+  }
+  .nav-btn {
+    background: #3b82f6; color: #fff; border: none; padding: 10px 20px;
+    border-radius: 8px; font-size: 1em; cursor: pointer; transition: 0.2s;
+  }
+  .nav-btn:hover { background: #2563eb; }
+  .nav-btn:disabled { background: #475569; cursor: not-allowed; opacity: 0.5; }
+  .page-counter { color: var(--muted); font-weight: bold; font-size: 1.1em; }
+
+  /* Пасхалка */
+  #eggModal {
+    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.9); z-index: 9999; text-align: center;
+  }
+  #eggModal img {
+    max-width: 95%; max-height: 80vh; margin-top: 10vh;
+    border: 4px solid var(--accent2); border-radius: 15px; box-shadow: 0 0 30px var(--accent2);
+  }
+  .close-btn { color: #fff; font-size: 40px; position: absolute; top: 10px; right: 25px; cursor: pointer; font-weight: bold; }
+</style>
+</head>
+<body>
+
+  <!-- Верхняя панель -->
+  <div class="topbar">
+    <h2 id="topTitle">Конспект (RU)</h2>
+    <div class="lang-switch">
+      <button id="btn-ru" class="active" onclick="setLang('ru')">RU</button>
+      <button id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+
+  <!-- Основной контент (16 страниц) -->
+  <div class="main-content" id="contentArea">
+    <!-- Страницы будут вставлены через JS -->
+  </div>
+
+  <!-- Нижняя навигация -->
+  <div class="nav-bar">
+    <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">← Назад</button>
+    <span class="page-counter" id="pageCounter">1 / 16</span>
+    <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Вперед →</button>
+  </div>
+
+  <!-- Окно пасхалки (Картинка кабана) -->
+  <div id="eggModal" onclick="closeEgg()">
+    <span class="close-btn">&times;</span>
+    <!-- ВАЖНО: Картинка должна называться pig.jpg и лежать рядом с файлом site.html -->
+    <img src="pig.jpg" alt="Easter Egg 67">
+  </div>
+
+<script>
+  let currentSlide = 0;
+  let currentLang = 'ru';
+  let clicks = 0;
+  let clickTimer = null;
+
+  // Массив текстов для 16 страниц (на русском и английском)
+  const slidesData = [
+    { // 1
+      ru: { title: "Present Simple и Present Continuous", body: "<p style='text-align:center; margin-top:20px;'>Добро пожаловать в цифровой конспект!<br>Нажми «Вперед», чтобы начать изучение.</p>" },
+      en: { title: "Present Simple and Present Continuous", body: "<p style='text-align:center; margin-top:20px;'>Welcome to the digital summary!<br>Press 'Next' to start learning.</p>" }
+    },
+    { // 2
+      ru: { title: "Что такое Present Simple?", body: "<p>Время <b>Present Simple</b> (Настоящее простое) обозначает действия, которые происходят <b>регулярно, постоянно</b> или являются <b>общеизвестными фактами</b>.</p><h3>Когда используем:</h3><ul><li>Привычки и рутина (I wake up at 7 am).</li><li>Факты и законы природы (The sun rises in the east).</li><li>Расписания (The train leaves at 6 pm).</li></ul>" },
+      en: { title: "What is Present Simple?", body: "<p><b>Present Simple</b> describes actions that happen <b>regularly, constantly</b>, or are <b>general facts</b>.</p><h3>When to use:</h3><ul><li>Habits and routines (I wake up at 7 am).</li><li>Facts and laws of nature (The sun rises in the east).</li><li>Timetables (The train leaves at 6 pm).</li></ul>" }
+    },
+    { // 3
+      ru: { title: "Образование Present Simple", body: "<ul><li><b>Утверждение:</b> Подлежащее + глагол (+s/es для he/she/it).</li><li><b>Отрицание:</b> Подлежащее + do/does not + глагол.</li><li><b>Вопрос:</b> Do/Does + подлежащее + глагол?</li></ul><div class='example'>I <b>play</b> tennis.<br>She <b>plays</b> tennis.</div>" },
+      en: { title: "Present Simple Form", body: "<ul><li><b>Positive:</b> Subject + verb (+s/es for he/she/it).</li><li><b>Negative:</b> Subject + do/does not + verb.</li><li><b>Question:</b> Do/Does + subject + verb?</li></ul><div class='example'>I <b>play</b> tennis.<br>She <b>plays</b> tennis.</div>" }
+    },
+    { // 4
+      ru: { title: "Маркеры Present Simple", body: "<p>Слова-подсказки, которые указывают на Present Simple:</p><ul><li><b>always</b> (всегда)</li><li><b>usually</b> (обычно)</li><li><b>often</b> (часто)</li><li><b>sometimes</b> (иногда)</li><li><b>never</b> (никогда)</li><li><b>every day / week / year</b> (каждый день/неделю/год)</li></ul>" },
+      en: { title: "Present Simple Markers", body: "<p>Signal words that indicate Present Simple:</p><ul><li><b>always</b></li><li><b>usually</b></li><li><b>often</b></li><li><b>sometimes</b></li><li><b>never</b></li><li><b>every day / week / year</b></li></ul>" }
+    },
+    { // 5
+      ru: { title: "Что такое Present Continuous?", body: "<p>Время <b>Present Continuous</b> (Настоящее длительное) обозначает действия, которые происходят <b>прямо сейчас, в момент речи</b>, либо запланированы на ближайшее будущее.</p><h3>Когда используем:</h3><ul><li>Действие в процессе (I am reading now).</li><li>Временные ситуации (He is living in London this month).</li><li>Запланированное будущее (We are meeting tomorrow).</li></ul>" },
+      en: { title: "What is Present Continuous?", body: "<p><b>Present Continuous</b> describes actions happening <b>right now, at the moment of speaking</b>, or planned for the near future.</p><h3>When to use:</h3><ul><li>Action in progress (I am reading now).</li><li>Temporary situations (He is living in London this month).</li><li>Future plans (We are meeting tomorrow).</li></ul>" }
+    },
+    { // 6
+      ru: { title: "Образование Present Continuous", body: "<ul><li><b>Утверждение:</b> Подлежащее + am/is/are + глагол+ing.</li><li><b>Отрицание:</b> Подлежащее + am/is/are not + глагол+ing.</li><li><b>Вопрос:</b> Am/Is/Are + подлежащее + глагол+ing?</li></ul><div class='example cont'>I <b>am playing</b> tennis.<br>They <b>are playing</b> tennis.</div>" },
+      en: { title: "Present Continuous Form", body: "<ul><li><b>Positive:</b> Subject + am/is/are + verb+ing.</li><li><b>Negative:</b> Subject + am/is/are not + verb+ing.</li><li><b>Question:</b> Am/Is/Are + subject + verb+ing?</li></ul><div class='example cont'>I <b>am playing</b> tennis.<br>They <b>are playing</b> tennis.</div>" }
+    },
+    { // 7
+      ru: { title: "Маркеры Present Continuous", body: "<p>Слова-подсказки для Present Continuous:</p><ul><li><b>now</b> (сейчас)</li><li><b>right now</b> (прямо сейчас)</li><li><b>at the moment</b> (в данный момент)</li><li><b>Look!</b> (Смотри!)</li><li><b>Listen!</b> (Слушай!)</li><li><b>today</b> (сегодня)</li></ul>" },
+      en: { title: "Present Continuous Markers", body: "<p>Signal words for Present Continuous:</p><ul><li><b>now</b></li><li><b>right now</b></li><li><b>at the moment</b></li><li><b>Look!</b></li><li><b>Listen!</b></li><li><b>today</b></li></ul>" }
+    },
+    { // 8
+      ru: { title: "Сравнение времен", body: "<div class='table-wrap'><table><tr><th>Present Simple</th><th>Present Continuous</th></tr><tr><td>I <b>work</b> every day.</td><td>I <b>am working</b> now.</td></tr><tr><td>She <b>reads</b> books.</td><td>She <b>is reading</b> a book.</td></tr><tr><td>They <b>don't play</b> chess.</td><td>They <b>aren't playing</b> chess.</td></tr></table></div>" },
+      en: { title: "Tense Comparison", body: "<div class='table-wrap'><table><tr><th>Present Simple</th><th>Present Continuous</th></tr><tr><td>I <b>work</b> every day.</td><td>I <b>am working</b> now.</td></tr><tr><td>She <b>reads</b> books.</td><td>She <b>is reading</b> a book.</td></tr><tr><td>They <b>don't play</b> chess.</td><td>They <b>aren't playing</b> chess.</td></tr></table></div>" }
+    },
+    { // 9
+      ru: { title: "Глаголы состояния (Stative Verbs)", body: "<p>Некоторые глаголы <b>не используются</b> в Present Continuous, даже если действие происходит сейчас. Они описывают чувства, мысли и состояния.</p><ul><li><b>Чувства:</b> like, love, hate, want, need.</li><li><b>Мышление:</b> know, understand, believe, remember.</li><li><b>Восприятие:</b> see, hear.</li></ul>" },
+      en: { title: "Stative Verbs", body: "<p>Some verbs are <b>not used</b> in Present Continuous, even if the action is happening now. They describe feelings, thoughts, and states.</p><ul><li><b>Feelings:</b> like, love, hate, want, need.</li><li><b>Thinking:</b> know, understand, believe, remember.</li><li><b>Perception:</b> see, hear.</li></ul>" }
+    },
+    { // 10
+      ru: { title: "Исключения из Stative Verbs", body: "<p>Некоторые глаголы могут использоваться в Continuous, но <b>с другим значением</b>:</p><div class='example cont'><b>have</b> (иметь) -> I have a car. / <b>have</b> (испытывать) -> I am having lunch.</div><div class='example cont'><b>think</b> (считать) -> I think it's good. / <b>think</b> (обдумывать) -> I am thinking about it.</div>" },
+      en: { title: "Stative Verbs Exceptions", body: "<p>Some verbs can be used in Continuous but <b>with a different meaning</b>:</p><div class='example cont'><b>have</b> (possess) -> I have a car. / <b>have</b> (experience) -> I am having lunch.</div><div class='example cont'><b>think</b> (believe) -> I think it's good. / <b>think</b> (consider) -> I am thinking about it.</div>" }
+    },
+    { // 11
+      ru: { title: "Правило добавления -ing", body: "<p>При образовании Present Continuous мы добавляем <b>-ing</b> к глаголу. Есть правила:</p><ul><li>Обычно просто добавляем: play -> play<b>ing</b>.</li><li>Немая -e отпадает: make -> mak<b>ing</b>.</li><li>Удвоение согласной: run -> run<b>ning</b> (если глагол короткий и ударение на последний слог).</li><li>ie меняется на y: lie -> ly<b>ing</b>.</li></ul>" },
+      en: { title: "-ing Spelling Rules", body: "<p>When forming Present Continuous, we add <b>-ing</b> to the verb. Rules:</p><ul><li>Usually just add: play -> play<b>ing</b>.</li><li>Silent -e drops: make -> mak<b>ing</b>.</li><li>Double consonant: run -> run<b>ning</b>.</li><li>ie becomes y: lie -> ly<b>ing</b>.</li></ul>" }
+    },
+    { // 12
+      ru: { title: "Отрицание и Вопросы", body: "<h3>Present Simple:</h3><div class='example'>I <b>do not (don't) like</b> coffee.<br><b>Do</b> you <b>like</b> coffee?</div><h3>Present Continuous:</h3><div class='example cont'>I <b>am not (I'm not) reading</b> now.<br><b>Are</b> you <b>reading</b> now?</div>" },
+      en: { title: "Negatives and Questions", body: "<h3>Present Simple:</h3><div class='example'>I <b>do not (don't) like</b> coffee.<br><b>Do</b> you <b>like</b> coffee?</div><h3>Present Continuous:</h3><div class='example cont'>I <b>am not (I'm not) reading</b> now.<br><b>Are</b> you <b>reading</b> now?</div>" }
+    },
+    { // 13
+      ru: { title: "Специальные вопросы (Wh-questions)", body: "<p>Вопросительные слова ставятся в самое начало предложения:</p><div class='example'><b>Where</b> do you live?</div><div class='example cont'><b>What</b> are you doing?</div><p>В Present Simple после вопросительного слова идет do/does, в Continuous — am/is/are.</p>" },
+      en: { title: "Wh-questions", body: "<p>Question words are placed at the very beginning:</p><div class='example'><b>Where</b> do you live?</div><div class='example cont'><b>What</b> are you doing?</div><p>In Present Simple we use do/does after the question word, in Continuous — am/is/are.</p>" }
+    },
+    { // 14
+      ru: { title: "Наречия частоты", body: "<p>В Present Simple наречия частоты (always, usually, often) ставятся <b>перед глаголом</b>, но <b>после глагола to be</b>:</p><div class='example'>I <b>always</b> drink coffee.</div><div class='example'>He <b>is always</b> late.</div>" },
+      en: { title: "Adverbs of Frequency", body: "<p>In Present Simple adverbs of frequency (always, usually, often) go <b>before the main verb</b>, but <b>after the verb to be</b>:</p><div class='example'>I <b>always</b> drink coffee.</div><div class='example'>He <b>is always</b> late.</div>" }
+    },
+    { // 15
+      ru: { title: "Глаголы, меняющие значение", body: "<p>Есть глаголы, которые в Simple и Continuous имеют разные оттенки:</p><div class='example cont'><b>see</b> (видеть) -> I see a bird. / <b>see</b> (встречаться) -> I am seeing a doctor.</div>" },
+      en: { title: "Verbs that Change Meaning", body: "<p>Some verbs have different meanings in Simple and Continuous:</p><div class='example cont'><b>see</b> (perceive) -> I see a bird. / <b>see</b> (meet) -> I am seeing a doctor.</div>" }
+    },
+    { // 16
+      ru: { title: "Итоговая шпаргалка", body: "<div class='table-wrap'><table><tr><th>Аспект</th><th>Present Simple</th><th>Present Continuous</th></tr><tr><td>Суть</td><td>Факт, привычка</td><td>Процесс, сейчас</td></tr><tr><td>Маркеры</td><td>always, every day</td><td>now, at the moment</td></tr><tr><td>Форма</td><td>V / V+s</td><td>am/is/are + Ving</td></tr></table></div><br><p style='text-align:center; color:#f59e0b; font-size:1.3em;'><b>Конец конспекта! Отличная работа! 🎉</b></p>" },
+      en: { title: "Final Cheat Sheet", body: "<div class='table-wrap'><table><tr><th>Aspect</th><th>Present Simple</th><th>Present Continuous</th></tr><tr><td>Essence</td><td>Fact, habit</td><td>Process, now</td></tr><tr><td>Markers</td><td>always, every day</td><td>now, at the moment</td></tr><tr><td>Form</td><td>V / V+s</td><td>am/is/are + Ving</td></tr></table></div><br><p style='text-align:center; color:#f59e0b; font-size:1.3em;'><b>End of summary! Great job! 🎉</b></p>" }
+    }
+  ];
+
+  // Отрисовка всех слайдов
+  function renderSlides() {
+    const area = document.getElementById('contentArea');
+    area.innerHTML = '';
+    
+    slidesData.forEach((slide, index) => {
+      const div = document.createElement('div');
+      div.className = 'slide' + (index === currentSlide ? ' active' : '');
+      div.id = 'slide-' + index;
+      
+      // Только на первом слайде заголовок кликабельный для пасхалки
+      const isFirst = index === 0;
+      const titleAttr = isFirst ? "onclick='countClick()'" : "";
+      
+      div.innerHTML = `
+        <h1 ${titleAttr}>${slide[currentLang].title}</h1>
+        <div>${slide[currentLang].body}</div>
+      `;
+      
+      area.appendChild(div);
+    });
+  }
+
+  // Переключение слайдов
+  function changeSlide(direction) {
+    currentSlide += direction;
+    if (currentSlide < 0) currentSlide = 0;
+    if (currentSlide >= slidesData.length) currentSlide = slidesData.length - 1;
+
+    updateView();
+  }
+
+  function updateView() {
+    // Скрываем все слайды
+    document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+    // Показываем текущий
+    const activeSlide = document.getElementById('slide-' + currentSlide);
+    if (activeSlide) activeSlide.classList.add('active');
+
+    // Обновляем кнопки и счетчик
+    document.getElementById('prevBtn').disabled = currentSlide === 0;
+    document.getElementById('nextBtn').disabled = currentSlide === slidesData.length - 1;
+    document.getElementById('pageCounter').textContent = (currentSlide + 1) + ' / ' + slidesData.length;
+    
+    // Скролл вверх при смене страницы
+    document.getElementById('contentArea').scrollTop = 0;
+  }
+
+  // Логика пасхалки (срабатывает только на 1-м слайде)
+  function countClick() {
+    if (currentSlide !== 0) return; // Работает только на первом слайде
+
+    clicks++;
+    if (clicks === 3) {
+      document.getElementById('eggModal').style.display = 'block';
+      clicks = 0;
+    }
+    
+    clearTimeout(clickTimer);
+    clickTimer = setTimeout(function() {
+      clicks = 0;
+    }, 800);
+  }
+
+  function closeEgg() {
+    document.getElementById('eggModal').style.display = 'none';
+  }
+
+  // Смена языка
+  function setLang(lang) {
+    currentLang = lang;
+    document.getElementById('btn-ru').classList.toggle('active', lang === 'ru');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.getElementById('topTitle').textContent = lang === 'ru' ? 'Конспект (RU)' : 'Summary (EN)';
+    
+    // Перерисовываем слайды на выбранном языке
+    renderSlides();
+    updateView();
+  }
+
+  // Запуск
+  document.addEventListener('DOMContentLoaded', () => {
+    renderSlides();
+    updateView();
+  });
+</script>
+
+</body>
+</html>
